@@ -1,0 +1,90 @@
+LeetCode 168: Excel Sheet Column Title
+In this particular problem, we are given a scenario of an Excel sheet where the column numbers start from 1 and go onward (1, 2, 3, ..., 26, 27, ...). We are given a column number, and based on that, we have to return the corresponding column title as it appears in an Excel sheet.
+
+Example mappings:
+
+A → 1
+
+B → 2
+
+C → 3
+
+...
+
+Z → 26
+
+AA → 27
+
+AB → 28
+
+...
+
+Concept
+We are dealing with a custom version of Base 26, which is different from regular base systems:
+
+Base 10: Uses digits 0–9
+
+Base 2 (binary): Uses digits 0 and 1
+
+Base 26 (normal): Uses letters A–Z, starting from 0
+
+Base 26 (Excel-style): Uses letters A–Z, starting from 1
+
+So, in Excel:
+
+A = 1
+
+B = 2
+
+...
+
+Z = 26
+
+However, in typical base systems, counting starts from 0. To make our calculations easier and compatible with Excel’s 1-based indexing, we subtract 1 from the column number. This helps us map the numbers properly to letters.
+
+For example:
+
+If columnNumber = 26, subtracting 1 gives us 25.
+
+25 % 26 = 25 → 'A' + 25 = 'Z' ✅
+
+Without subtracting, 26 % 26 = 0 → 'A' + 0 = 'A' ❌ (incorrect)
+
+Step-by-step Process
+Subtract 1 from the column number (to convert to 0-based indexing).
+
+Find the remainder using % 26. This gives the position relative to 'A'.
+
+Convert that remainder to a character: 'A' + remainder.
+
+Add this character in front of the result string.
+
+Update the column number by dividing it by 26.
+
+Repeat the process until the column number becomes 0.
+
+C++ Code
+
+class Solution {
+public:
+    string convertToTitle(int columnNumber) {
+        string result = "";
+        while (columnNumber > 0) {
+            columnNumber--;  // Adjust for Excel's 1-based indexing
+            int remainder = columnNumber % 26;
+            char ch = 'A' + remainder;
+            result = ch + result;
+            columnNumber /= 26;
+        }
+        return result;
+    }
+};
+Example:
+Input: columnNumber = 28
+Output: "AB"
+
+Input: columnNumber = 701
+Output: "ZY"
+
+Input: columnNumber = 703
+Output: "AAA"
