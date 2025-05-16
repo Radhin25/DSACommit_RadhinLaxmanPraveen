@@ -1,0 +1,64 @@
+🧠 Goal:
+To check if a number is a happy number, i.e., when we repeatedly replace it by the sum of the squares of its digits, we eventually get 1.
+If it gets stuck in a loop (never reaches 1), it's not a happy number.
+
+🔁 Step 1: unordered_set<int> seen;
+We need to detect if we are stuck in a cycle.
+
+A cycle means we've already seen the number before.
+
+So we use an unordered set to store each number we generate.
+
+🔄 Step 2: while (n != 1 && seen.find(n) == seen.end())
+We keep running the loop until:
+
+We get n == 1 → 🎉 Happy number!
+
+OR we get a repeated number → 🔁 Cycle detected = not a happy number.
+
+seen.find(n) == seen.end() checks if n has NOT been seen before.
+
+✅ Step 3: seen.insert(n);
+Before processing n, we insert it into the seen set.
+
+This marks it as "visited" so we can detect future cycles.
+
+🧮 Step 4: while (n != 0)
+Now we want to break the number n into individual digits, square each one, and add the squares.
+
+Example:
+If n = 19,
+
+1^2 + 9^2 = 1 + 81 = 82
+
+Inside the loop:
+
+int rem = n % 10;     // Gets last digit
+sum += rem * rem;     // Square and add to sum
+n /= 10;              // Remove the last digit
+
+🔁 Step 5: n = sum;
+Replace the current n with the sum of the squares of its digits.
+
+Now repeat the process with this new n.
+
+✅ Step 6: return n == 1;
+If the loop ended because n == 1, that means the number is happy 🎉 → return true.
+
+If the loop ended because we saw a repeated number (cycle) → return false.
+
+✅ Dry Run Example:
+Let’s test with n = 19:
+
+Step	n	Digits Squared	Sum	Seen Set
+1	19	1² + 9² = 1 + 81	82	{19}
+2	82	8² + 2² = 64 + 4	68	{19, 82}
+3	68	6² + 8² = 36 + 64	100	{19, 82, 68}
+4	100	1² + 0² + 0² = 1 + 0 + 0	1	{19, 82, 68, 100}			
+
+Now n == 1, so we return true.
+
+🧠 Why It Works:
+The use of unordered_set prevents infinite loops.
+We only compute the digit squares until we get 1 or repeat.
+This makes the code efficient, safe, and clear.
