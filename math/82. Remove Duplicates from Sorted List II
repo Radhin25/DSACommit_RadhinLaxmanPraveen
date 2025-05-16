@@ -1,0 +1,101 @@
+Remove Duplicates from Sorted List II
+
+Problem:
+You are given the head of a sorted linked list. You need to delete all nodes that have duplicate numbers, leaving only the distinct numbers from the original list. The returned list should also be sorted.
+
+Example:
+Input: head = [1, 2, 3, 3, 4, 4, 5]
+Output: [1, 2, 5]
+
+Concept:
+Each node in a linked list has two things:
+
+A value (val)
+
+A pointer to the next node (called next, created using * in C++)
+
+Now, let’s understand how we solve this problem.
+
+We are going to use a technique called the dummy node method.
+
+Step-by-step Explanation:
+
+We create a dummy node that holds a value (here we just use 0).
+This dummy node points to the head of the actual list.
+
+Why we use a dummy node:
+If duplicate values occur at the very beginning of the list (for example, [1, 1, 2, 3]), and we try to delete them directly, we might lose the head.
+A dummy node saves us from that situation by holding a reference to the head. Even if we delete some of the starting nodes, we can still return the remaining list using dummy->next.
+
+We create a pointer called prev and set it to dummy.
+This pointer helps us connect the last known non-duplicate node to the next valid node after duplicates are skipped.
+
+We use a pointer called head to traverse the list.
+We check if the current value and the next value are the same (head->val == head->next->val).
+If they are, we keep moving the head forward while the values are still the same.
+After we skip all nodes with that duplicate value, we connect prev->next to head->next, which skips over all those duplicates.
+
+If the current value and the next value are not equal, we simply move prev to the next node.
+
+Finally, we move head to the next node.
+
+When the loop finishes, we return dummy->next, which gives us the updated list with all duplicates removed.
+
+Final Code (C++):
+
+
+Summary of key points:
+
+dummy->next = head means: connect dummy node to start of list
+
+prev pointer helps us reconnect list when duplicates are removed
+
+head is used to walk through the list
+
+We only update prev when we find a non-duplicate
+
+If we find duplicates, we skip all of them using a nested while loop
+
+At the end, return dummy->next to skip over deleted head if needed
+
+This code removes all nodes with duplicate values in a sorted linked list and returns the cleaned-up list.
+
+
+
+
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+
+        ListNode*dummy=new ListNode(0);
+        dummy->next=head;
+        ListNode*prev=dummy;
+
+        while(head){
+            if(head->next && head->val==head->next->val){
+                while(head->next && head->val==head->next->val){
+                    head=head->next;
+                }
+                prev->next=head->next;
+            }
+            else{
+                prev=prev->next;
+            }
+            head=head->next;
+        }
+        return dummy->next;
+        
+    }
+};
+
