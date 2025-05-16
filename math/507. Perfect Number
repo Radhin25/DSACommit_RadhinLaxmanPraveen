@@ -1,0 +1,91 @@
+507. Perfect Number
+
+A perfect number is a positive integer that is equal to the sum of its positive divisors, excluding the number itself. A divisor of an integer x is an integer that can divide x evenly.
+Given an integer n, return true if n is a perfect number, otherwise return false.
+
+💡 Brute-Force Logic:
+We are going to:
+
+Loop from 1 to num - 1
+Check every number i if it is a divisor of num → i.e., num % i == 0
+If it divides the number, we add it to sum
+Finally, if sum == num, then it's a perfect number, otherwise not.
+
+Inefficient for large values of num
+Time Complexity: O(n)
+(We check all numbers from 1 to num-1)
+
+
+🚀 Optimized Approach
+✅ Core Idea:
+For every divisor i of a number num, there is a paired divisor num / i.
+For example, if i = 2 divides 28, then 28 / 2 = 14 is also a divisor. So you get both 2 and 14 from a single check.
+To avoid duplicate work, we only loop till √num (square root of num).
+
+🧠 Step-by-Step Logic
+
+bool checkPerfectNumber(int num) {
+    if (num <= 1) return false; // 0 and 1 can't be perfect numbers
+
+    int sum = 1; // 1 is a divisor of every number
+
+    // Run the loop from 2 to sqrt(num)
+    for (int i = 2; i * i <= num; ++i) {
+
+        if (num % i == 0) {
+            sum += i;
+
+            // Add the paired divisor only if it's different (to avoid duplicates)
+            if (i != num / i) {
+                sum += num / i;
+            }
+        }
+    }
+
+    // Finally check if sum of divisors equals the number
+    return sum == num;
+}
+📌 Why i * i <= num Instead of i <= sqrt(num)?
+We write:
+for (int i = 2; i * i <= num; ++i)
+instead of:
+
+for (int i = 2; i <= sqrt(num); ++i)
+✅ Reason:
+Using i * i <= num avoids calling sqrt(num) which is a function call and can be costly in terms of time (especially in tight loops).
+
+i * i <= num uses integer arithmetic → faster
+sqrt(num) uses floating-point arithmetic → slower and risk of precision error
+So this trick is used in competitive programming and optimized code.
+
+🧠 Why We Start From i = 2?
+Because we already added 1 to the sum, as 1 is a divisor of all numbers.
+Also, num itself is excluded (as per the problem), so we don’t consider it.
+
+🔁 Example: num = 28
+Loop from 2 to sqrt(28) = 5.x
+Divisors:
+2 → 28/2 = 14 → sum += 2 + 14
+4 → 28/4 = 7 → sum += 4 + 7
+Final sum = 1 + 2 + 14 + 4 + 7 = 28
+
+✅ It’s a Perfect Number
+
+✅ Time Complexity: O(√n)
+Operation	Time
+Looping through divisors up to √n	O(√n)
+Constant operations inside loop	O(1)
+Total	O(√n)
+
+Much better than brute force O(n)!
+
+📌 Final Notes:
+num <= 1 → directly return false
+
+sum starts at 1
+
+Loop from i = 2 to i * i <= num
+
+Always avoid adding duplicate divisor (i == num/i)
+
+Return sum == num
