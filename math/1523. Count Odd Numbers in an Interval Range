@@ -72,3 +72,20 @@ Summary
 Method	Time Complexity	Space Complexity	Description
 Brute Force	      O(n)	O(1)	Iterate through range and count
 Optimized Method	O(1)	O(1)	Use mathematical formula directly
+
+
+
+for finding even
+
+class Solution {
+public:
+    int countEvens(int low, int high) {
+        int total = high - low + 1;
+        int odds = (high + 1) / 2 - (low / 2);
+        return total - odds;
+    }
+};
+
+
+
+
