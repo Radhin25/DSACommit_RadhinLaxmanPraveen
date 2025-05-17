@@ -1,0 +1,74 @@
+1523. Count Odd Numbers in an Interval Range
+Problem Statement:
+Given two non-negative integers low and high, return the count of odd numbers between low and high (inclusive).
+
+Examples:
+Example 1:
+Input: low = 3, high = 7
+Output: 3
+Explanation: The odd numbers between 3 and 7 are [3, 5, 7].
+
+Example 2:
+Input: low = 8, high = 10
+Output: 1
+Explanation: The odd number between 8 and 10 is [9].
+
+Brute Force Method
+The brute force approach involves iterating through every number from low to high and counting the odd numbers by checking the remainder when divided by 2.
+
+Approach:
+Initialize a counter to zero.
+
+Loop from low to high (inclusive).
+
+For each number, check if it is odd (num % 2 != 0).
+
+Increment the counter if the number is odd.
+
+Return the counter after the loop finishes.
+
+Code:
+
+class Solution {
+public:
+    int countOdds(int low, int high) {
+        int cnt = 0;
+        while (low <= high) {
+            if (low % 2 != 0) cnt++;
+            low++;
+        }
+        return cnt;
+    }
+};
+Time Complexity:
+O(n) where n is the size of the interval [low, high].
+
+Optimized Mathematical Method
+Instead of looping, we use a mathematical formula that counts how many odd numbers lie within the given range directly.
+
+Insight:
+The count of odd numbers from 1 to n is approximately (n + 1) / 2.
+
+To find the count of odd numbers between low and high, we calculate:
+Code:
+
+class Solution {
+public:
+    int countOdds(int low, int high) {
+        return (high + 1) / 2 - (low / 2);
+    }
+};
+Explanation:
+(high + 1) / 2 gives the count of odd numbers from 0 up to high.
+
+(low / 2) gives the count of odd numbers from 0 up to low - 1.
+
+Their difference is the count of odd numbers in the range [low, high].
+
+Time Complexity:
+O(1) constant time, no loops required.
+
+Summary
+Method	Time Complexity	Space Complexity	Description
+Brute Force	      O(n)	O(1)	Iterate through range and count
+Optimized Method	O(1)	O(1)	Use mathematical formula directly
