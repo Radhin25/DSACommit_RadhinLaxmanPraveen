@@ -1,0 +1,68 @@
+🔍 Problem Statement:
+Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
+
+✅ Approach - Using the Sum Formula
+One of the most efficient ways to solve this problem is by using the sum formula for the first n natural numbers.
+
+🧠 Intuition:
+The range of numbers is [0, n], which means there are n + 1 numbers in total, but the array has only n elements (one number is missing).
+
+Initialize two variables:
+
+sum1 to store the sum of all elements in the array (nums)
+
+sum2 to store the sum of all numbers from 0 to n using a loop
+
+Since the loop goes from 0 to n-1, we manually add n to sum2 after the loop to include the last number.
+
+The difference between sum2 and sum1 will give the missing number.
+
+If no number is missing (hypothetically), the difference would be 0.
+
+🧮 C++ Code:
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int sum1 = 0; // Sum of actual array elements
+        int sum2 = 0; // Sum of expected numbers from 0 to n
+
+        for (int i = 0; i < nums.size(); i++) {
+            sum1 += nums[i];
+            sum2 += i;
+        }
+
+        sum2 += nums.size(); // Include the last number 'n' in the range [0, n]
+        return sum2 - sum1;  // The difference is the missing number
+    }
+};
+
+
+Time Complexity: O(n)
+Space Complexity: O(1)
+
+📌 Example:
+
+Input: nums = [3, 0, 1]
+Output: 2
+Explanation:
+Expected sum from 0 to 3 = 0 + 1 + 2 + 3 = 6
+Actual sum = 3 + 0 + 1 = 4
+Missing number = 6 - 4 = 2
+
+
+class Solution {
+public:
+    int missingNumber(vector<int>& nums) {
+        int sum1=0;
+        int sum2=0;
+        for(int i=0;i<nums.size();i++){
+            sum1=sum1+nums[i];
+            sum2=sum2+i;
+        }
+        sum2=sum2+nums.size();
+        return sum2-sum1;
+
+        
+
+    }
+};
