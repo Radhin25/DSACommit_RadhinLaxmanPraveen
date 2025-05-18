@@ -1,0 +1,81 @@
+Given an integer n, return the number of trailing zeroes in n! (n factorial).
+
+Note: You are not allowed to store or compute the entire value of n! as it grows extremely large for big n.
+
+🔍 What Are Trailing Zeroes?
+Trailing zeroes are the zeroes at the end of a number.
+For example:
+
+5! = 120 → 1 trailing zero
+
+10! = 3628800 → 2 trailing zeroes
+
+100! ends with 24 zeroes.
+
+💡 Key Insight
+What causes a trailing zero?
+Every time a number is multiplied by 10, a trailing zero is added.
+
+Since 10 = 2 × 5, we need to count how many (2, 5) pairs exist in the factorial.
+
+But in factorial, which factor is more common: 2 or 5?
+2 appears more frequently than 5.
+
+So the number of fives (5s) determines how many trailing zeroes we get.
+
+✅ Approach: Count the Number of 5s in Factorization
+Let’s take n = 100. We count:
+
+How many multiples of 5? → 100/5 = 20
+
+How many multiples of 25 (since 25 = 5×5)? → 100/25 = 4
+
+How many multiples of 125? → 100/125 = 0
+
+So:
+Total trailing zeroes = 20 + 4 = 24
+
+cpp
+Copy
+Edit
+class Solution {
+public:
+    int trailingZeroes(int n) {
+        int count = 0;
+        while(n > 0){
+            n /= 5;         // Divide n by 5
+            count += n;     // Add to count
+        }
+        return count;
+    }
+};
+🧠 Why This Works
+Each division by 5 tells us how many numbers ≤ n are divisible by 5 (i.e., contribute at least one 5).
+
+We continue dividing by 5 to account for:
+
+Numbers like 25 (5×5) contribute two 5s
+
+Numbers like 125 (5×5×5) contribute three 5s, etc.
+
+So we add n/5 + n/25 + n/125 + ... to get the total count of 5s.
+
+🤔 Why Not Count the 2s?
+You can, but it’s unnecessary. There are more 2s than 5s in any factorial. So they don’t limit the number of 10s.
+
+Hence, we only count the number of 5s.
+
+class Solution {
+public:
+    int trailingZeroes(int n) {
+        int count=0;
+        while(n>0){
+            
+           
+            n=n/5;
+            count=count+n;
+        }
+        return count;
+        
+    }
+};
