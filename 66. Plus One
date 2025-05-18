@@ -1,0 +1,56 @@
+✅ Problem Summary:
+Input:
+An array of digits representing a non-negative integer (e.g., [1,2,3]).
+
+Task:
+Increment the integer by one and return the resulting number as an array of digits.
+
+📘 Example:
+
+Input:  digits = [1, 2, 3]
+Output: [1, 2, 4]
+Explanation: 123 + 1 = 124 → [1, 2, 4]
+
+💡 Intuition:
+The most optimal approach is to simulate addition from the last digit, just like we do manually:
+
+Start from the last digit and move towards the first.
+
+If the digit is less than 9, simply increment it and return the array.
+
+If the digit is 9, set it to 0 and continue (carry will go to the next digit).
+
+If all digits are 9 (e.g., [9,9,9]), the result would be [1,0,0,0].
+
+🧠 Algorithm Steps:
+Traverse the array from end to start.
+
+If the digit is less than 9, increment it and return immediately.
+
+Else, set the digit to 0 (because 9 + 1 = 10, so we carry over).
+
+If loop finishes, it means all were 9s → insert 1 at the beginning.
+
+✅ Code (C++):
+
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+        int n = digits.size();
+        for (int i = n - 1; i >= 0; i--) {
+            if (digits[i] < 9) {
+                digits[i]++;
+                return digits;  // No need to go further
+            }
+            digits[i] = 0;  // Set current 9 to 0 and carry over
+        }
+        // If we reach here, all digits were 9 → e.g., 999 + 1 = 1000
+        digits.insert(digits.begin(), 1);
+        return digits;
+    }
+};
+🧪 Time & Space Complexity:
+Time: O(n) → In worst case, we may need to traverse all digits.
+
+Space: O(1) → No extra space (excluding the output vector).
+
