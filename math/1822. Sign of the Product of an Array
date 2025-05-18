@@ -1,0 +1,80 @@
+🧠 Problem Understanding: 1822. Sign of the Product of an Array
+In this problem, we are given an integer array nums, and we are not required to compute the actual product of all elements.
+Instead, we only need to return the sign of the product:
+
+Return 1 if the product is positive
+
+Return -1 if the product is negative
+
+Return 0 if any element is 0
+
+💡 Key Insight
+❗ We don’t need to calculate the full product.
+Why? Because:
+
+Calculating the full product might cause overflow due to large numbers.
+
+We only care about the sign, not the actual value.
+
+🔍 Observation:
+Let’s consider the multiplication rules:
+
+Positive × Positive = Positive
+
+Negative × Negative = Positive
+
+Positive × Negative = Negative
+
+Any number × 0 = 0
+
+So the final sign depends only on:
+
+Whether there's a zero in the array → return 0.
+
+The number of negative values:
+
+If even → product is positive → return 1
+
+If odd → product is negative → return -1
+
+✅ Code Implementation
+
+class Solution {
+public:
+    int arraySign(vector<int>& nums) {
+        int cntn=0;
+        for(int i=0;i<nums.size();i++){
+            if(nums[i]==0)return 0;
+            else if(nums[i]<0){
+                cntn=cntn+1;
+            }
+        }
+        if(cntn%2==0)return 1;
+        else return -1;
+
+    }
+};
+
+🧪 Example
+Input: nums = [-1, 2, -3]
+
+Negative count = 2 → Even → Product is positive
+
+Output: 1
+
+Input: nums = [-1, 2, 3]
+
+Negative count = 1 → Odd → Product is negative
+
+Output: -1
+
+Input: nums = [0, 1, -2]
+
+Contains 0 → Product is zero
+
+Output: 0
+
+🏁 Conclusion
+This problem is a classic example of how analyzing patterns and mathematical properties can help solve a problem without brute-force calculations.
+We optimized it by avoiding multiplication altogether and directly counting the negative signs and checking for zeros.
+
