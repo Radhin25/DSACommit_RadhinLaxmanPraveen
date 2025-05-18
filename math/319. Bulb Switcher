@@ -1,0 +1,28 @@
+319. Bulb Switcher
+
+
+💡 The Bulb Problem: What's Happening?
+You have n bulbs, all OFF initially.
+
+In round i, you toggle (switch ON if OFF, OFF if ON) every i-th bulb.
+
+So, bulb 1 is toggled in every round (since every number divides 1).
+
+Bulb 2 is toggled in rounds 1 and 2.
+
+Bulb 3 is toggled in rounds 1 and 3.
+
+...
+
+Bulb 6 is toggled in rounds: 1, 2, 3, and 6.
+
+
+class Solution {
+public:
+    int bulbSwitch(int n) {
+        return sqrt(n);
+    }
+};
+
+
+
