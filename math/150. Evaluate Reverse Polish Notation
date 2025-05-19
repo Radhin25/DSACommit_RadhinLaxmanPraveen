@@ -2,8 +2,27 @@
 You are given an array of strings tokens that represents an arithmetic expression in a Reverse Polish Notation.
 Evaluate the expression. Return an integer that represents the value of the expression.
 
+🔁 Step-by-Step Logic:
+Initialize a stack to store operands (numbers).
 
-in this pwarticular problem we are taking 
+Iterate through each token in the input list:
+
+If the token is a number:
+
+Convert it from a string to an integer using stoi(token) and push it onto the stack.
+
+If the token is an operator (+, -, *, /):
+
+Pop the top two numbers from the stack.
+
+Apply the operator on them in the correct order:
+
+For example: if you pop b first and then a, then a <op> b.
+
+Push the result back onto the stack.
+
+After processing all tokens, the top of the stack will contain the final result.
+
 class Solution {
 public:
     int evalRPN(vector<string>& tokens) {
