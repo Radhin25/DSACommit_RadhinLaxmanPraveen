@@ -1,0 +1,26 @@
+1979. Find the Greatest Common Divisor of an Array
+Given an integer array nums, return the greatest common divisor of the smallest number and largest number in nums.
+The greatest common divisor of two numbers is the largest positive integer that evenly divides both numbers.
+
+In this particular, we are going to use recursion too in order to get the gcd. There are two functions that we are using 
+One to calculate the min max , and then we are using these min and max to calculate the gcd using the Euclidean method 
+
+class Solution {
+public:
+    int findGCD(vector<int>& nums) {
+        int maxi=nums[0];
+        int mini=nums[0];
+        for(int i=1;i<nums.size();i++){
+            if(nums[i]<mini)mini=nums[i];
+            else if(nums[i]>maxi){
+                maxi=nums[i]; 
+            }
+        }
+        return gcd(maxi, mini);
+
+    }
+    int gcd(int a, int b){
+        if(b==0)return a;
+        return gcd(b,a%b);
+    }
+};
