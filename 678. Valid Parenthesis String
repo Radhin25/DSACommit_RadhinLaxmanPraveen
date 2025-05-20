@@ -1,0 +1,102 @@
+Given a string s containing only three types of characters: '(', ')' and '*', return true if s is valid.
+
+The following rules define a valid string:
+
+Any left parenthesis '(' must have a corresponding right parenthesis ')'.
+Any right parenthesis ')' must have a corresponding left parenthesis '('.
+Left parenthesis '(' must go before the corresponding right parenthesis ')'.
+'*' could be treated as a single right parenthesis ')' or a single left parenthesis '(' or an empty string "".
+
+
+class Solution {
+public:
+    bool checkValidString(string s) {
+        int low = 0, high = 0;
+
+        for (char c : s) {
+            if (c == '(') {
+                low++;
+                high++;
+            } else if (c == ')') {
+                if (low > 0) low--;
+                high--;
+            } else if (c == '*') {
+                if (low > 0) low--;  // treat * as )
+                high++;              // treat * as (
+            }
+
+            if (high < 0) return false; // More ')' than '(' at any point
+        }
+
+        return low == 0;
+        
+    }
+};
+
+
+Goal:
+Validate a string containing '(', ')', and '*', where '*' can be treated as '(', ')', or an empty string "".
+
+🔍 Key Idea: Track Range of Possible Open Brackets
+We use two variables:
+
+low: the minimum number of unmatched '(' possible.
+
+high: the maximum number of unmatched '(' possible.
+
+This lets us handle the uncertainty of '*' flexibly.
+
+🔁 Step-by-Step Traversal of the String
+For each character c in the string s:
+
+If c == '(':
+
+We have one more unmatched '('.
+
+So we increase both low and high.
+
+If c == ')':
+
+This could close an unmatched '(', so:
+
+We decrease high (we must consider it closing something).
+
+We decrease low only if it's greater than 0 (cannot go negative).
+
+If c == '*':
+
+It could be:
+
+'(' → so increase high
+
+')' → so decrease low
+
+"" → nothing changes
+
+So:
+
+low = max(0, low - 1) (treat * as ')')
+
+high = high + 1 (treat * as '(')
+
+If high < 0 at any point:
+
+It means we have more ')' than we can match — invalid, so return false.
+
+✅ Final Check After Loop
+If low == 0, it means all unmatched '(' were properly closed considering the wildcards.
+
+So return true only if low == 0.
+
+🧠 Why This Works
+low tracks the worst-case unmatched '(' (assuming '*' acts as ')').
+
+high tracks the best-case unmatched '(' (assuming '*' acts as '(').
+
+If low ever becomes negative, we reset it to 0, since we can't have negative unmatched left brackets.
+
+⏱️ Time and Space Complexity
+Time: O(n) — one pass through the string.
+
+Space: O(1) — only two variables used.
+
