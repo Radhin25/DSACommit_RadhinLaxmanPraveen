@@ -1,0 +1,83 @@
+Maximum Subarray Problem Solution
+
+Problem Description
+
+The Maximum Subarray problem is a classic coding challenge where you’re given an integer array nums, and your task is to find the contiguous subarray (a sequence of numbers next to each other) that has the largest sum. You then return that sum.
+
+Examples
+
+Example 1:
+Input: nums = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+Output: 6
+Explanation: The subarray [4, -1, 2, 1] has the largest sum, which is 6.
+
+
+Example 2:
+Input: nums = [1]
+Output: 1
+Explanation: The subarray [1] has the largest sum, which is 1.
+
+
+Approach: Kadane's Algorithm
+
+We solve this problem using Kadane's Algorithm, a clever and efficient method to find the maximum subarray sum in just one pass through the array. Here’s how it works in simple terms:
+
+Key Idea
+
+Imagine you’re walking through the array from left to right, deciding at each step whether to:
+Start a new subarray from the current number (if the previous sum is dragging you down).
+Or keep adding to your current subarray (if adding the new number helps).
+We use two variables to track our progress:
+currsum: This keeps the sum of the subarray ending at the current position. It checks "the sum till now."
+maxsum: This stores the largest sum we’ve found so far. It tracks "the maximum sum."
+
+Steps
+Edge Case: If the array is empty, return 0.
+Initialize:
+Set currsum to the first element (nums[0]) because we start with just that number.
+Set maxsum to the first element too, as it’s the best sum we’ve seen so far.
+Traverse the Array:
+Use a for loop to go from the second element (index 1) to the end of the array.
+For each number (nums[i]):
+Update currsum: Choose the maximum of:
+nums[i]: Start a new subarray with just the current number.
+currsum + nums[i]: Add the current number to the existing subarray sum.
+Update maxsum: Check if currsum is greater than maxsum. If it is, update maxsum to be the new best sum.
+Return: After the loop, maxsum holds the largest subarray sum, so return it.
+
+Why It Works
+Kadane’s Algorithm is like a smart treasure hunt: at each step, you decide if keeping your current pile (adding the new number) or starting fresh gives you more treasure.
+It handles positive and negative numbers, single-element arrays, and all-negative arrays correctly.
+It’s fast because we only need one loop!
+
+Time Complexity: O(n), where n is the length of the array. We only pass through the array once.
+Space Complexity: O(1), because we only use two variables (currsum and maxsum), no extra space.
+
+Solution Code
+
+
+class Solution {
+public:
+    int maxSubArray(vector<int>& nums) {
+        // Edge case: if array is empty, return 0
+        if (nums.empty()) {
+            return 0;
+        }
+        
+        // Initialize both variables to the first element
+        int maxsum = nums[0];
+        int currsum = nums[0];
+        
+        // Loop through array from second element to the end
+        for (int i = 1; i < nums.size(); i++) {
+            // Update currsum: start new subarray or add to current one
+            currsum = max(nums[i], currsum + nums[i]);
+            // Update maxsum: check if current sum is the new maximum
+            maxsum = max(maxsum, currsum);
+        }
+        
+        // Return the largest subarray sum found
+        return maxsum;
+    }
+};
+
