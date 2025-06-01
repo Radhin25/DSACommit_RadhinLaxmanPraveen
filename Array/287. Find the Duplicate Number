@@ -1,0 +1,67 @@
+287. Find the Duplicate Number
+
+We have to find the duplicate number in th array.
+SO what we are going to do is the i) brute force approach ii) optimised approach 
+
+I) BRUTE FORCE APPROACH 
+NOTE: TIME LIMITED IS EXCEEDS IN THIS CASE 
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        for(int i=0;i<=nums.size()-1;i++){
+            for(int j=i+1;j<nums.size();j++){
+                int temp=nums[i]^nums[j];
+                if(temp==0)return nums[i];
+            }
+        }
+        return 0;
+
+    }
+};
+in this partivular solution i am utilising the XOR OPERATION. IN XOR OPERATION when we perform xor operation between toiw elements that are
+same the answer would be zero always.
+
+so we are using nested loops where we would be chekcing, the out er loop will be running from 0, n-2 as it wouls stop at the second largest element 
+and the inner loop would stop at i+1 to n-1. it will perform the xor operation and if the number is same it will have zero then will return the num 
+
+
+
+ii) OPTIMISED APPROACH 
+
+
+class Solution {
+public:
+    int findDuplicate(vector<int>& nums) {
+        unordered_set<int>seen;
+        for(int i:nums){
+            if(seen.count(i))return i;
+            seen.insert(i);
+        }
+        return -1;
+        
+    }
+}
+
+in this solutuion we are going to use hashset, the feutre of jhashet is that it does not store duplicate elements.
+❓Why is it called a hash set?
+Because it uses a hash table internally:
+	•	It converts values (like 1, 2, 3) into hash codes.
+	•	These codes determine where in memory to store the value.
+	•	This allows super-fast search and insert operations.
+
+🔁 Can We Traverse It with a Regular Loop?
+Short Answer: ❌ No, not like a normal for (int i = 0; i < n; i++) loop.
+Because:
+	•	unordered_set doesn’t store values in order.
+	•	It doesn’t support index-based access like mySet[0].
+
+it when goes though the nums(given array) by the element and if it sees seen.count(val)then it will return the lement and if not then will 
+seen.insert(val) 
+seen is t5h unordered hash set we are creating 
+
+==============================================================================================================================
+
+ANOTHER OPTIMISED MEHTOD 
+
+
+
